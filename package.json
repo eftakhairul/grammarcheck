@@ -1,0 +1,38 @@
+{
+  "name": "grammar-check",
+  "version": "1.0.0",
+  "description": "A simple Desktop app to fix grammar and spelling using Gemini API",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
+    "build:win": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.grammarcheck.app",
+    "productName": "GrammarCheck",
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "target": ["zip"],
+      "category": "public.app-category.productivity"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Office"
+    },
+    "win": {
+      "target": ["nsis", "portable"]
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^26.7.0"
+  }
+}

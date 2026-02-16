@@ -1,5 +1,7 @@
 # GrammarCheck
 
+<img width="1202" height="811" alt="Screen Shot 2026-02-16 at 2 38 22 AM" src="https://github.com/user-attachments/assets/07f9caff-343c-4a98-9470-8e8d4c90ec73" />
+
 A simple desktop app that fixes grammar, spelling, and punctuation. With just an input field and a "Check" button, it leverages AI to correct your text and explain the changes.
 
 ## Features

@@ -4,14 +4,20 @@
     --text-primary: #0f172a;
     --text-secondary: #475569;
     --accent-color: #10b981;
-    /* Emerald 500 */
     --accent-hover: #059669;
-    /* Emerald 600 */
     --border-color: #e2e8f0;
     --danger-color: #ef4444;
     --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.15), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --radius: 12px;
+}
+
+[data-theme="dark"] {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
 }
 
 * {
@@ -26,6 +32,7 @@ body {
     color: var(--text-primary);
     height: 100vh;
     overflow: hidden;
+    transition: background-color 0.2s, color 0.2s;
 }
 
 .app-container {
@@ -43,7 +50,6 @@ header {
     align-items: center;
     border-bottom: 1px solid var(--border-color);
     -webkit-app-region: drag;
-    /* Draggable window */
 }
 
 .logo {
@@ -67,6 +73,13 @@ header {
     font-size: 1.5rem;
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    -webkit-app-region: no-drag;
+}
+
 .icon-btn {
     background: transparent;
     border: none;
@@ -76,6 +89,9 @@ header {
     border-radius: 8px;
     transition: all 0.2s;
     -webkit-app-region: no-drag;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .icon-btn:hover {
@@ -83,12 +99,16 @@ header {
     color: var(--text-primary);
 }
 
+.icon-btn.small {
+    padding: 0.375rem;
+}
+
 /* Settings Panel */
 .settings-panel {
     background-color: var(--bg-color);
     border-bottom: 1px solid var(--border-color);
     overflow: hidden;
-    max-height: 200px;
+    max-height: 220px;
     transition: max-height 0.3s ease-in-out;
 }
 
@@ -103,6 +123,15 @@ header {
     margin: 0 auto;
 }
 
+.settings-content h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+}
+
 .input-group label {
     display: block;
     margin-bottom: 0.5rem;
@@ -110,19 +139,45 @@ header {
     font-size: 0.875rem;
 }
 
-.input-group input {
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.75rem 2.75rem 0.75rem 0.75rem;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 1rem;
     outline: none;
     transition: border-color 0.2s;
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    font-family: inherit;
 }
 
-.input-group input:focus {
+.password-wrapper input:focus {
     border-color: var(--accent-color);
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.eye-btn {
+    position: absolute;
+    right: 0.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.eye-btn:hover {
+    color: var(--text-primary);
 }
 
 .hint {
@@ -140,6 +195,8 @@ header {
     border-radius: 6px;
     cursor: pointer;
     font-weight: 500;
+    font-family: inherit;
+    transition: background-color 0.2s;
 }
 
 .primary-btn:hover {
@@ -168,6 +225,7 @@ main {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     border: 2px solid var(--border-color);
     overflow: hidden;
+    transition: background-color 0.2s, border-color 0.2s;
 }
 
 .panel-header {
@@ -184,6 +242,12 @@ main {
     color: var(--text-primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+}
+
+.panel-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 #charCount {
@@ -207,11 +271,23 @@ textarea,
     overflow-y: auto;
 }
 
+textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.6;
+}
+
 .output-content {
     white-space: pre-wrap;
 }
 
-/* Action Area (Middle Button) */
+.empty-state {
+    color: var(--text-secondary);
+    opacity: 0.5;
+    font-style: italic;
+    pointer-events: none;
+}
+
+/* Action Area */
 .action-area {
     display: flex;
     flex-direction: column;
@@ -235,12 +311,18 @@ textarea,
     gap: 0.25rem;
 }
 
-.control-group label {
+.control-group label:not(.toggle-switch):not(.toggle-label) {
     font-size: 0.875rem;
     font-weight: 700;
     color: var(--text-primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+}
+
+.toggle-group {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.625rem;
 }
 
 select {
@@ -266,11 +348,11 @@ select:focus {
 .toggle-switch {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
     cursor: pointer;
     position: relative;
     width: 40px;
     height: 20px;
+    flex-shrink: 0;
 }
 
 .toggle-switch input {
@@ -348,6 +430,12 @@ input:checked+.slider:before {
     transform: scale(0.95);
 }
 
+.fix-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .spinner {
     width: 20px;
     height: 20px;
@@ -371,11 +459,10 @@ input:checked+.slider:before {
 .explanation-panel {
     border-top: 1px solid var(--border-color);
     padding: 1rem;
-    background-color: #f8fafc;
+    background-color: var(--bg-color);
     overflow-y: auto;
     max-height: 200px;
     flex: 0 0 auto;
-    /* Don't grow, stick to size or auto */
 }
 
 .explanation-panel h3 {
@@ -390,6 +477,63 @@ input:checked+.slider:before {
     font-size: 0.9rem;
     color: var(--text-secondary);
     line-height: 1.5;
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.toast {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+    max-width: 300px;
+    animation: toastIn 0.2s ease forwards;
+    pointer-events: all;
+}
+
+.toast.success {
+    background-color: var(--accent-color);
+}
+
+.toast.error {
+    background-color: var(--danger-color);
+}
+
+.toast.info {
+    background-color: #3b82f6;
+}
+
+@keyframes toastIn {
+    from {
+        transform: translateX(110%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toastOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(110%);
+        opacity: 0;
+    }
 }
 
 @media (max-width: 800px) {
